@@ -1,0 +1,16 @@
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/movietheaterdb</property>
+        <property name="hibernate.connection.username">postgres</property>
+        <property name="hibernate.connection.password">123456</property>
+
+        <!--CREATE for testing -->
+        <property name="hibernate.hbm2ddl.auto">create</property>
+
+        <mapping class="model.entities.Seat"/>
+        <mapping class="model.entities.Room"/>
+        <mapping class="model.entities.RoomDetail"/>
+    </session-factory>
+</hibernate-configuration>

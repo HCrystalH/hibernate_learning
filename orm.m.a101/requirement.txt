@@ -1,0 +1,116 @@
+This assignment requires trainees having Java, Maven, SQL, File and Hibernate knowledge. Technical details 
+are: 
+ Java 8 or up 
+ Hibernate 5 or up 
+ Maven 3 
+ MS SQL Server or others (MySQL Server, Oracle, PostgreSQL, etc) 
+The important note:  
+ Should avoid many-to-many design for entities and have to know the differences between create 
+and update for the property hbm2ddl.auto. 
+ Java classes must follow naming convention rules (for examples, class names and attribute names 
+must not have _) 
+ Tables must have names as required on the design (for examples, Employee table has first_name 
+column instead of firstname) 
+ The DAO class should have at least 5 methods as getXxxByID, getAllXxx, updateXxxByID, 
+deleteXxxById, insertXxx where Xxx is the model class of DAO. You could choose other verbs instead 
+of get, update, delete, and insert. However, they should be consistent among DAO classes and 
+meaningful.
+
+Movie Theater Application 
+Objectives:  
+ Understand what is the mapping in Hibernate. 
+ Know about types of Association mapping. 
+ Able to use the basic annotations to map Java objects to relational tables. 
+ Able to implement the association relationship: OneToOne, OneToMany. 
+ Know how to implement CRUD operations in Hibernate. 
+Technical Requirements: 
+ Must use Eclipse to build projects. 
+ Must use tools with versions mentioned above. 
+Problem Descriptions: 
+A theater wants to have an application to manage their movie room as well as seat booking. The project team 
+designed the ERD as below after asseted the requirements and seat booking operations. 
+# Movie Theater Database Schema
+
+## Table: CINEMA_ROOM
+
+Stores information about cinema rooms.
+
+| Column Name       | Data Type     | Constraints |
+|------------------|--------------|-------------|
+| CINEMA_ROOM_ID   | int          | Primary Key |
+| CINEMA_ROOM_NAME | varchar(255) | Unique, Not Null |
+| SEAT_QUANTITY    | int          | Not Null |
+
+---
+
+## Table: SEAT
+
+Stores seat information for each cinema room.
+
+| Column Name    | Data Type     | Constraints |
+|---------------|--------------|-------------|
+| SEAT_ID       | int          | Primary Key |
+| CINEMA_ROOM_ID| int          | Foreign Key → CINEMA_ROOM.CINEMA_ROOM_ID |
+| SEAT_COLUMN   | varchar(255) | Not Null |
+| SEAT_ROW      | int          | Not Null |
+| SEAT_STATUS   | varchar(255) | Not Null |
+| SEAT_TYPE     | varchar(255) | Not Null |
+
+### Relationship
+- One **CINEMA_ROOM** can have many **SEAT** records.
+- `SEAT.CINEMA_ROOM_ID` references `CINEMA_ROOM.CINEMA_ROOM_ID`.
+
+---
+
+## Table: CINEMA_ROOM_DETAIL
+
+Stores room pricing and descriptive information over time.
+
+| Column Name           | Data Type     | Constraints |
+|----------------------|--------------|-------------|
+| CINEMA_ROOM_DETAIL_ID| int          | Primary Key |
+| CINEMA_ROOM_ID       | int          | Foreign Key → CINEMA_ROOM.CINEMA_ROOM_ID |
+| ROOM_RATE            | int          | Not Null |
+| ACTIVE_DATE          | date         | Not Null |
+| ROOM_DESCRIPTION     | varchar(250) | Not Null |
+
+### Relationship
+- One **CINEMA_ROOM** have one**CINEMA_ROOM_DETAIL** record.
+- `CINEMA_ROOM_DETAIL.CINEMA_ROOM_ID` references `CINEMA_ROOM.CINEMA_ROOM_ID`.
+
+---
+
+# Entity Relationship Summary
+
+```text
+CINEMA_ROOM
+│
+├───< SEAT
+│      (many seats per cinema room)
+│
+└───< CINEMA_ROOM_DETAIL
+       (many room detail records per cinema room)
+A cinema room has a lot of seats, each seat includes a seat column, seat row, seat status ('Available’, 'Not 
+Available', 'Booked' and type ('VIP', 'Normal').  
+A cinema room has only one detailed information that includes: room rate, active date and description. 
+After developing CRUD operations for this project, you must simulate one senario of all activities. The database 
+name should be movietheaterdb. 
+Questions to answer: 
+The trainees need to create a new project structure to use Maven managing libraries, project name as 
+orm.m.a101. 
+Creating a package with name as fa.training.entities in this project that contain 3 above entities: SEAT, 
+CINEMA_ROOM, CINEMA_ROOM_DETAIL. You should see new tables by running ‘SELECT’ queries after 
+connected to movietheaterdb database. 
+
+You must create the appropriate DAO classes for the above models (SeatDao, RoomDao, RoomDetailDao) 
+to proceed CRUD operations 
+Unit Testing Requirements: 
+ You must write scripts to test all of the DAO methods that you have developed. 
+Guidelines: 
+The Date or Time columns, it is recommended to use LocalDate or LocalTime to search for high accuracy.
+
+
+
+----
+Resume this session with:
+claude --resume 804efcd0-c453-4523-a223-d45d3fd67a58
