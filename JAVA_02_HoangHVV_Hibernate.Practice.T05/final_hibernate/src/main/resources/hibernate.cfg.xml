@@ -1,0 +1,22 @@
+<hibernate-configuration>
+    <session-factory>
+        <!-- PostgreSQL -->
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/final_exam</property>
+        <property name="hibernate.connection.username">postgres</property>
+        <property name="hibernate.connection.password">123456</property>
+
+        <!-- DDL auto -->
+        <property name="hibernate.hbm2ddl.auto">update</property>
+
+        <!-- Show SQL in console -->
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.format_sql">true</property>
+        <property name="hibernate.highlight_sql">true</property>
+
+        <!-- Entity mappings -->
+        <mapping class="fa.training.entities.Airplane"/>
+        <mapping class="fa.training.entities.Seat"/>
+    </session-factory>
+</hibernate-configuration>

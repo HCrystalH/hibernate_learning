@@ -1,0 +1,33 @@
+Airplane and Seat: 1-many
+Schema
+Airplane: id(auto-increment), model (unique, varchar), width(int), total_seats(int), created_date(datetime), updated(datetime)
+Seat: id(varchar),airplane_id(FK,int) type(varchar),status(varchar), created_date(datetime), updated(datetime)
+
+Business Rules:
+1. created/updated date: should be programmatically generated (when do create a new record the created date should be required and can't be updated)
+when do update a record, the updated date should be required.
+2. model:     unique : 6 characters in UPPERCASE, exclude special characters: *,#,&
+                 ex: HJB112
+3. total seats:      show total number of seats belong to an airplane
+                       an airplane usually has 6 columns (A,B,C,D,E,F) -> number must be divisible by 6
+4. type: accepts 2 values ECONOMY or BUSINESS with ECONOMY being the default value.
+5. status: accepts 2 AVAILABLE or OCCUPIED with AVAILABLE being the default value.
+
+
+Functional Requirements:
+1. must use hibernate bean validation to validate business rule
+2. create appropriate DAO class the above models (AirplaneDAO ,SeatDAO) to proceed CRUD and some operations
+3. all seats of an airplane will be automatically generated and added based on the total seats input
+    create a method call List<Seat> generateSeats(int airplaneId) to handle
+    the ID of seat should be following format [model_airplane]_[column][number]
+4. create a function called List<Object[]> getAllAirplaneInDetail() to get detail Airplane information includes:
+model, length, width, total available economic seats, total occupied economic seats, total available business seats,
+and total occupied business seats
+
+5. create a function called List<Airplane> getAirplaneByWidth(int min, int max) to list all airplanes that
+have width within the input range.
+
+UNIT TESTING REQUIREMENTS:
+- u must write scripts to test at least a normal case of the DAO methods that u have developed.
+- create another test case to test save an airplane with a list Seat
+- create 3 other test cases to test 3 abnormal cases in Business rules.
